@@ -130,8 +130,9 @@ const BottomSheetModalProviderWrapper = ({
      * Here we mark the sheet that will unmount,
      * so it won't be restored.
      */
-    if (sheetIndex !== -1 && _sheetsQueue[sheetIndex]) {
-      _sheetsQueue[sheetIndex].willUnmount = true;
+    const bottomSheetModalRef = _sheetsQueue[sheetIndex];
+    if (sheetIndex !== -1 && bottomSheetModalRef) {
+      bottomSheetModalRef.willUnmount = true;
     }
 
     /**
