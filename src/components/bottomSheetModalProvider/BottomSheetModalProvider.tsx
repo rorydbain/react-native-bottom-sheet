@@ -118,7 +118,7 @@ const BottomSheetModalProviderWrapper = ({
     ) {
       sheetsQueueRef.current[
         sheetsQueueRef.current.length - 1
-      ].ref?.current?.restore();
+      ]?.ref?.current?.restore();
     }
   }, []);
   const handleWillUnmountSheet = useCallback((key: string) => {
@@ -130,7 +130,7 @@ const BottomSheetModalProviderWrapper = ({
      * Here we mark the sheet that will unmount,
      * so it won't be restored.
      */
-    if (sheetIndex !== -1) {
+    if (sheetIndex !== -1 && _sheetsQueue[sheetIndex]) {
       _sheetsQueue[sheetIndex].willUnmount = true;
     }
 
@@ -140,7 +140,7 @@ const BottomSheetModalProviderWrapper = ({
      */
     const hasMinimizedSheet = _sheetsQueue.length > 1;
     if (sheetOnTop && hasMinimizedSheet) {
-      _sheetsQueue[_sheetsQueue.length - 2].ref?.current?.restore();
+      _sheetsQueue[_sheetsQueue.length - 2]?.ref?.current?.restore();
     }
 
     sheetsQueueRef.current = _sheetsQueue;

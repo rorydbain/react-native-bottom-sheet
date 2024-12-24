@@ -127,7 +127,7 @@ export const useGestureEventsHandlersDefault: GestureEventsHandlersHookType =
 
         const lowestSnapPoint = enablePanDownToClose
           ? animatedContainerHeight.value
-          : animatedSnapPoints.value[0];
+          : animatedSnapPoints.value[0] ?? 0;
 
         /**
          * if scrollable is refreshable and sheet position at the highest

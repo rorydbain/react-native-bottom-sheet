@@ -14,7 +14,7 @@ const BottomSheetDebugView = ({ values }: BottomSheetDebugViewProps) => {
       {Object.keys(values).map(key => (
         <ReText
           key={`item-${key}`}
-          value={values[key]}
+          value={values[key] ?? 0}
           style={styles.text}
           text={key}
         />

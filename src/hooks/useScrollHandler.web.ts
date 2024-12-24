@@ -46,7 +46,7 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
       }
 
       initialContentOffsetY = element.scrollTop;
-      lastTouchY = event.touches[0].clientY;
+      lastTouchY = event.touches[0]?.clientY ?? 0;
       maybePrevent = scrollOffset <= 0;
     }
 
@@ -58,7 +58,7 @@ export const useScrollHandler = (_: never, onScroll?: ScrollableEvent) => {
       if (maybePrevent) {
         maybePrevent = false;
 
-        const touchY = event.touches[0].clientY;
+        const touchY = event.touches[0]?.clientY ?? 0;
         const touchYDelta = touchY - lastTouchY;
 
         if (touchYDelta > 0) {
