@@ -1328,6 +1328,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
             ]
         );
 
+
         const handleScrollTo = useCallback(function handleScrollTo(scrollArgs: {
             y: number;
             x: number;
@@ -1348,7 +1349,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
             // Reset the override state after a small delay to ensure the scroll completes
             setTimeout(() => {
                 animatedScrollableOverrideState.value = currentOverrideState;
-            }, scrollArgs.animated ? 300 : 0);
+            }, scrollArgs.animated ? 400 : 0);
         }, [animatedScrollableOverrideState]);
 
         useImperativeHandle(ref, () => ({
