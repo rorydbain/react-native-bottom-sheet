@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import React, {forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo,} from 'react';
-import {type Insets, Platform} from 'react-native';
+import {type Insets, Platform, ScrollView} from 'react-native';
 import {State} from 'react-native-gesture-handler';
 import Animated, {
     cancelAnimation,
@@ -297,6 +297,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
             isScrollableRefreshable,
             setScrollableRef,
             removeScrollableRef,
+            scrollableRef,
         } = useScrollable();
         // keyboard
         const {
@@ -1327,6 +1328,29 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
             ]
         );
 
+        const handleScrollTo = useCallback(function handleScrollTo(scrollArgs: {
+            y: number;
+            x: number;
+            animated: boolean;
+        }) {
+            // Save current scrollable override state
+            const currentOverrideState = animatedScrollableOverrideState.value;
+
+            // Temporarily unlock scrolling
+            animatedScrollableOverrideState.value = SCROLLABLE_STATE.UNLOCKED;
+
+            // Perform the scroll
+            const scrollViewRef = scrollableRef.current?.node?.current as ScrollView;
+            if (scrollViewRef?.scrollTo) {
+                scrollViewRef.scrollTo(scrollArgs);
+            }
+
+            // Reset the override state after a small delay to ensure the scroll completes
+            setTimeout(() => {
+                animatedScrollableOverrideState.value = currentOverrideState;
+            }, scrollArgs.animated ? 300 : 0);
+        }, [animatedScrollableOverrideState]);
+
         useImperativeHandle(ref, () => ({
             snapToIndex: handleSnapToIndex,
             snapToPosition: handleSnapToPosition,
@@ -1334,6 +1358,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
             collapse: handleCollapse,
             close: handleClose,
             forceClose: handleForceClose,
+            scrollTo: handleScrollTo,
         }));
         //#endregion
 
@@ -1432,6 +1457,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                 collapse: handleCollapse,
                 close: handleClose,
                 forceClose: handleForceClose,
+                scrollTo: handleScrollTo,
             }),
             [
                 animatedIndex,
@@ -1442,6 +1468,7 @@ const BottomSheetComponent = forwardRef<BottomSheet, BottomSheetProps>(
                 handleCollapse,
                 handleClose,
                 handleForceClose,
+                handleScrollTo,
             ]
         );
         //#endregion
