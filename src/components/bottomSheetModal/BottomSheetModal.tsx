@@ -414,7 +414,19 @@ function BottomSheetModalComponent<T = any>(
   );
   //#endregion
 
-  //#region expose methods
+    const handleScrollTo = useCallback((scrollArgs: {
+        y: number;
+        x: number;
+        animated: boolean;
+    }) => {
+        if (minimized.current) {
+            return;
+        }
+        bottomSheetRef.current?.scrollTo(scrollArgs);
+    }, [])
+
+
+    //#region expose methods
   useImperativeHandle(ref, () => ({
     // sheet
     snapToIndex: handleSnapToIndex,
@@ -429,6 +441,7 @@ function BottomSheetModalComponent<T = any>(
     // internal
     minimize: handleMinimize,
     restore: handleRestore,
+    scrollTo: handleScrollTo,
   }));
   //#endregion
 
