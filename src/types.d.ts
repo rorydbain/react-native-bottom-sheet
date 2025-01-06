@@ -81,14 +81,7 @@ export interface BottomSheetMethods {
    */
   forceClose: (animationConfigs?: WithSpringConfig | WithTimingConfig) => void;
 
-  /**
-   * Patched version of scrollTo that works even when content panning gesture is enabled.
-   * By default, the bottom sheet locks scrolling when not fully expanded, which prevents
-   * programmatic scrolling via scrollTo. This implementation temporarily unlocks the
-   * scrollable state, performs the scroll, and then restores the original state.
-   *
-   */
-   scrollTo: (scrollArgs: {
+  scrollTo: (scrollArgs: {
     y: number;
     x: number;
     animated: boolean;
