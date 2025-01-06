@@ -80,12 +80,6 @@ export interface BottomSheetMethods {
    * @see {WithTimingConfig}
    */
   forceClose: (animationConfigs?: WithSpringConfig | WithTimingConfig) => void;
-
-  scrollTo: (scrollArgs: {
-    y: number;
-    x: number;
-    animated: boolean;
-}) => void;
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: Using 'any' allows users to define their own strict types for 'data' property.
